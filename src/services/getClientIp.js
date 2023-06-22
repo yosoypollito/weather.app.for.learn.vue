@@ -1,0 +1,1 @@
+export const getClientIp = ()=>fetch('https://api.ipify.org?format=json').then(res=>res.json()).then(res=>res.ip)
