@@ -39,7 +39,7 @@ export const useWeatherStore = defineStore('weather', () => {
     const currentWeather = await getCurrentWeather({
       lat: positionData.value.coords.latitude,
       lon: positionData.value.coords.longitude,
-      ip: clientIP
+      ip: clientIP.value
     })
     
     location.value = currentWeather.location;
