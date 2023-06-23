@@ -9,10 +9,6 @@ const { location, current } = storeToRefs(store);
 
 await store.initializeState();
 
-store.$subscribe((mutate, state) => {
-  console.log(state)
-})
-
 </script>
 
 <template v-if="Object.keys(location).length > 0">

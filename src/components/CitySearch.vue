@@ -1,6 +1,6 @@
 <script setup>
 import debounce from "just-debounce-it";
-import { ref, watch } from "vue"
+import { watch } from "vue"
 import { getAutocomplete } from "../services/weatherApi";
 import { useWeatherStore } from "../stores/weather";
 import { storeToRefs } from "pinia";
@@ -34,9 +34,9 @@ watch(cityToSearch, () => {
     </label>
     <div class="flex flex-col gap-2 w-full dropdown">
       <input v-model="cityToSearch" class="input input-bordered w-full" type="text" />
-      <div v-if="cities.length > 0" class="dropdown w-full">
+      <div v-if="cities.value?.length > 0" class="dropdown w-full">
         <ul class="dropdown-content menu shadow rounded-box gap-2 w-full bg-neutral-focus z-10">
-          <li v-for="city in cities" :key="city.id" class="flex flex-col text-sm">
+          <li v-for="city in cities.value" :key="city.id" class="flex flex-col text-sm">
             <div class="flex flex-row items-center justify-center">
               <div class="flex flex-1 flex-col text-left justify-start items-start bg-lime">
                 <h3>{{ city.name }}</h3>
