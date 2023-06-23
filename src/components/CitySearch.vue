@@ -3,21 +3,17 @@ import debounce from "just-debounce-it";
 import { ref, watch } from "vue"
 import { getAutocomplete } from "../services/weatherApi";
 import { useWeatherStore } from "../stores/weather";
+import { storeToRefs } from "pinia";
 
-const { initializeState, $subscribe, addCityURLToLook } = useWeatherStore();
+const store = useWeatherStore();
+const { cityToSearch, location, cities } = storeToRefs(store)
 
-await initializeState();
+await store.initializeState();
 
-const cities = ref([]);
-
-$subscribe(async (mutate, state) => {
-  console.log({ citiesURLToLook: state.citiesURLToLook })
-  if (!state.location.name) return
-  cities.value = await getAutocomplete(state.location.name)
-  console.log(cities.value)
+watch(location, async () => {
+  if (!location.name) return
+  cities.value = await getAutocomplete(location.name)
 })
-
-const cityToSearch = ref("")
 
 const debouncedGetAutocomplete = debounce(async (search) => {
   const data = await getAutocomplete(search)
@@ -25,6 +21,7 @@ const debouncedGetAutocomplete = debounce(async (search) => {
 }, 500)
 
 watch(cityToSearch, () => {
+  if (cityToSearch.value === "") return;
   debouncedGetAutocomplete(cityToSearch.value)
 })
 
@@ -38,8 +35,7 @@ watch(cityToSearch, () => {
     <div class="flex flex-col gap-2 w-full dropdown">
       <input v-model="cityToSearch" class="input input-bordered w-full" type="text" />
       <div v-if="cities.length > 0" class="dropdown w-full">
-        <ul class="dropdown-content menu shadow rounded-box gap-2 w-full bg-neutral-focus z-10"
-          @change="console.log('aaa')">
+        <ul class="dropdown-content menu shadow rounded-box gap-2 w-full bg-neutral-focus z-10">
           <li v-for="city in cities" :key="city.id" class="flex flex-col text-sm">
             <div class="flex flex-row items-center justify-center">
               <div class="flex flex-1 flex-col text-left justify-start items-start bg-lime">
@@ -49,7 +45,7 @@ watch(cityToSearch, () => {
                   {{ city.region }}
                 </span>
               </div>
-              <button class="btn btn-primary text-xs p-2" @click="addCityURLToLook(city.url)">
+              <button class="btn btn-primary text-xs p-2" @click="store.addCityURLToLook(city.url)">
                 Add
               </button>
             </div>

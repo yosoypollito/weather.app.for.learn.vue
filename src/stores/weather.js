@@ -12,6 +12,8 @@ export const useWeatherStore = defineStore('weather', () => {
   const clientIP = ref(null) 
   const positionData = ref(null) 
   const citiesURLToLook = ref(new Map())
+  const cityToSearch = ref("");
+  const cities = ref([]);
   
   const savedCitiesURL = JSON.parse(localStorage.getItem('citiesURL'))
   const citiesURL = ref(savedCitiesURL || [])
@@ -40,8 +42,6 @@ export const useWeatherStore = defineStore('weather', () => {
       ip: clientIP
     })
     
-    console.log(currentWeather)
-    
     location.value = currentWeather.location;
     current.value = currentWeather.current;
     
@@ -58,6 +58,8 @@ export const useWeatherStore = defineStore('weather', () => {
   }
   
   const addCityURLToLook = async (url)=>{
+    cityToSearch.value = "";
+    cities.value = [];
     const currentCity  = await getCurrentWeatherFromURL(url)
     citiesURLToLook.value.set(url, currentCity)
     
@@ -70,6 +72,8 @@ export const useWeatherStore = defineStore('weather', () => {
     current,
     clientIP,
     positionData,
+    cityToSearch,
+    cities,
     citiesURLToLook,
     addCityURLToLook,
     initializeState
