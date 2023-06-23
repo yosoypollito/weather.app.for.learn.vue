@@ -4,6 +4,6 @@ import WeatherApp from '@/components/WeatherApp.vue'
 
 <template>
   <main>
-    <WeatherApp/>
+    <WeatherApp />
   </main>
 </template>

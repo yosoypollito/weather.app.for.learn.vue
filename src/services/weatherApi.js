@@ -25,6 +25,14 @@ export const getCurrentPosition = ()=> new Promise((resolve, reject)=>{
   });
 });
 
+export const getCurrentWeatherFromURL = async (url)=>{
+  const res = await fetch(`${HOST_URL}${ENDPOINTS.CURRENT_WEATHER}?q=${url}`,{
+    headers: HEADERS
+  })
+  const data = await res.json();
+  return data
+}
+
 export const getCurrentWeather = async ({
   lat, lon, ip
 }) => {

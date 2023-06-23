@@ -2,15 +2,17 @@ import { ref } from "vue"
 import { defineStore } from "pinia"
 
 import { getClientIp } from "../services/getClientIp"
-import { getCurrentPosition, getCurrentWeather } from "../services/weatherApi"
+import { getCurrentPosition, getCurrentWeather, getCurrentWeatherFromURL } from "../services/weatherApi"
 
 export const useWeatherStore = defineStore('weather', () => {
 
-    const initialized = ref(false)
-    const location = ref({})
-    const current = ref({})
-    const clientIP = ref(null) 
-    const positionData = ref(null) 
+  const initialized = ref(false)
+  const location = ref({})
+  const current = ref({})
+  const clientIP = ref(null) 
+  const positionData = ref(null) 
+  const citiesURLToLook = ref(new Map())
+  
   
   const initializeState = async ()=>{
     if(initialized.value) return;
@@ -29,6 +31,12 @@ export const useWeatherStore = defineStore('weather', () => {
     location.value = currentWeather.location;
     current.value = currentWeather.current;
   }
+  
+  const addCityURLToLook = async (url)=>{
+    console.log(url)
+    const currentCity  = await getCurrentWeatherFromURL(url)
+    citiesURLToLook.value.set(url, currentCity)
+  }
 
   return {
     initialized,
@@ -36,6 +44,8 @@ export const useWeatherStore = defineStore('weather', () => {
     current,
     clientIP,
     positionData,
+    citiesURLToLook,
+    addCityURLToLook,
     initializeState
   } 
 })
