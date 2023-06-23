@@ -11,8 +11,8 @@ const { cityToSearch, location, cities } = storeToRefs(store)
 await store.initializeState();
 
 watch(location, async () => {
-  if (!location.name) return
-  cities.value = await getAutocomplete(location.name)
+  if (!location.value.name) return
+  cities.value = await getAutocomplete(location.value.name)
 })
 
 const debouncedGetAutocomplete = debounce(async (search) => {
@@ -34,9 +34,9 @@ watch(cityToSearch, () => {
     </h2>
     <div class="flex flex-col gap-2 w-full dropdown">
       <input v-model="cityToSearch" class="input input-bordered w-full" type="text" />
-      <div v-if="cities.value?.length > 0" class="dropdown w-full">
+      <div v-if="cities.length > 0" class="dropdown w-full">
         <ul class="dropdown-content menu shadow rounded-box gap-2 w-full bg-neutral-focus z-10">
-          <li v-for="city in cities.value" :key="city.id" class="flex flex-col text-sm">
+          <li v-for="city in cities" :key="city.id" class="flex flex-col text-sm">
             <div class="flex flex-row items-center justify-center">
               <div class="flex flex-1 flex-col text-left justify-start items-start bg-lime">
                 <h3>{{ city.name }}</h3>
