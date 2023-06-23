@@ -13,6 +13,20 @@ export const useWeatherStore = defineStore('weather', () => {
   const positionData = ref(null) 
   const citiesURLToLook = ref(new Map())
   
+  const savedCitiesURL = JSON.parse(localStorage.getItem('citiesURL'))
+  const citiesURL = ref(savedCitiesURL || [])
+  
+  console.log({savedCitiesURL})
+  
+  if(citiesURL.value.length !== citiesURLToLook.value){
+    citiesURL.value.forEach(url => {
+      getCurrentWeatherFromURL(url)
+      .then(city=>{
+        citiesURLToLook.value.set(url, city)
+      })
+    })
+  
+  }
   
   const initializeState = async ()=>{
     if(initialized.value) return;
@@ -30,12 +44,24 @@ export const useWeatherStore = defineStore('weather', () => {
     
     location.value = currentWeather.location;
     current.value = currentWeather.current;
+    
+  }
+  
+  const saveCitiesUrl = (url)=>{
+    let urls = JSON.parse(localStorage.getItem('citiesURL'))
+    if(!Array.isArray(urls)){
+      urls = []
+    }
+    urls.push(url)
+    urls = [...new Set(urls)];
+    localStorage.setItem("citiesURL", JSON.stringify(urls))
   }
   
   const addCityURLToLook = async (url)=>{
-    console.log(url)
     const currentCity  = await getCurrentWeatherFromURL(url)
     citiesURLToLook.value.set(url, currentCity)
+    
+    saveCitiesUrl(url)
   }
 
   return {
