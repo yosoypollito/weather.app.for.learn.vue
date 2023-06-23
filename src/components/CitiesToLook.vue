@@ -1,13 +1,18 @@
 <script setup>
 import WeatherCard from './WeatherCard.vue';
 import { useWeatherStore } from '../stores/weather';
-import { storeToRefs } from "pinia"
+
+import { ref } from 'vue';
 
 const store = useWeatherStore();
-const { citiesURLToLook } = storeToRefs(store);
+const toLook = ref({})
+
+store.$subscribe((mutate, state) => {
+  const citiesToLookObject = Object.fromEntries(state.citiesURLToLook)
+  toLook.value = citiesToLookObject
+})
 </script>
 
-<template>
-  <WeatherCard v-for="(city, url) in Object.fromEntries(citiesURLToLook.value)" :key="url" :location="city.location"
-    :current="city.current" />
+<template v-if="Object.keys(toLook).length > 0">
+  <WeatherCard v-for="(city, url) in toLook" :key="url" :location="city.location" :current="city.current" />
 </template>
