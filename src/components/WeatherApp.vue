@@ -7,6 +7,10 @@ import CurrentWeather from "./CurrentWeather.vue"
 
 <template>
   <div class="flex flex-col gap-12 justify-center items-center p-4">
+    <div class="text-center">
+      <h1 class="text-3xl">Weather App</h1>
+      <p>Maded for learn vue for a interview</p>
+    </div>
     <Suspense>
 
       <CurrentWeather />
