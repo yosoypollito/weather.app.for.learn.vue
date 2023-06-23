@@ -29,9 +29,9 @@ watch(cityToSearch, () => {
 
 <template>
   <div class="flex flex-col gap-2 w-full max-w-md">
-    <label class="text-lg font-semibold">
+    <h2 class="text-lg font-semibold text-center">
       Look for your city
-    </label>
+    </h2>
     <div class="flex flex-col gap-2 w-full dropdown">
       <input v-model="cityToSearch" class="input input-bordered w-full" type="text" />
       <div v-if="cities.value?.length > 0" class="dropdown w-full">
