@@ -36,7 +36,7 @@ const selectedSize = sizes[props.size || "default"];
 
         </div>
 
-        <div class="flex flex-col items-start gap-0.5 font-bold">
+        <div class="flex flex-col items-end gap-0.5 font-bold">
           <h2 :class="selectedSize.locationName">
             {{ props.location.name }}
           </h2>
