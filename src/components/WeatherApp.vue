@@ -2,6 +2,7 @@
 import CitiesToLook from './CitiesToLook.vue';
 import CitySearch from './CitySearch.vue';
 import CurrentWeather from "./CurrentWeather.vue"
+import LoadingCircle from "./LoadingCircle.vue"
 
 </script>
 
@@ -12,11 +13,10 @@ import CurrentWeather from "./CurrentWeather.vue"
       <p>Maded for learn vue for a interview</p>
     </div>
     <Suspense>
-
       <CurrentWeather />
 
       <template #fallback>
-        Loading currentWeather
+        <LoadingCircle />
       </template>
     </Suspense>
 
@@ -24,7 +24,7 @@ import CurrentWeather from "./CurrentWeather.vue"
       <CitySearch />
 
       <template #fallback>
-        Loading CitySearch
+        <LoadingCircle />
       </template>
     </Suspense>
 
@@ -32,7 +32,7 @@ import CurrentWeather from "./CurrentWeather.vue"
       <CitiesToLook />
 
       <template #fallback>
-        Loading citiestoLook
+        <LoadingCircle />
       </template>
     </Suspense>
   </div>
