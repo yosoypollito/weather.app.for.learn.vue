@@ -14,5 +14,7 @@ store.$subscribe((mutate, state) => {
 </script>
 
 <template v-if="Object.keys(toLook).length > 0">
-  <WeatherCard v-for="(city, url) in toLook" :key="url" :location="city.location" :current="city.current" />
+  <div class="grid grid-cols-[repeat(auto-fit,_minmax(330px,_1fr))] place-items-center gap-2 w-full">
+    <WeatherCard v-for="(city, url) in toLook" :key="url" :location="city.location" :current="city.current" size="sm" />
+  </div>
 </template>

@@ -3,14 +3,13 @@ import SwitchGrades from './SwitchGrades.vue';
 
 const props = defineProps({
   location: {},
-  current: {}
+  current: {},
+  size: String
 })
-console.log('a')
-
 </script>
 
 <template>
-  <div class="card card-bordered shadow max-w-lg w-full bg-base-100">
+  <div :class="`card card-bordered shadow max-w-lg w-full bg-base-100 ${props.size === 'sm' && 'text-xs'}`">
     <div class="card-body items-start w-full">
       <div class="flex flex-row justify-between w-full">
         <div>
