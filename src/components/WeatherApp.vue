@@ -10,7 +10,7 @@ import LoadingCircle from "./LoadingCircle.vue"
   <div class="flex flex-col gap-12 justify-center items-center p-4">
     <div class="text-center">
       <h1 class="text-3xl">Weather App</h1>
-      <p>Maded to learn vue for a interview</p>
+      <p>Made to learn vue for an interview</p>
     </div>
     <Suspense>
       <CurrentWeather />
